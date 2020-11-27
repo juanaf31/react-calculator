@@ -5,25 +5,28 @@ import Output from './Output';
 function CalculatorApp() {
 	const [ result, setResult ] = useState('');
 
-	const calculate = () => {
-		setResult(
-			// result: eval(this.state.result)
-			eval(result)
-			// || '' + ''
-		);
+	const calculate = (result) => {
+		const res = eval(result);
+		setResult(res);
 	};
 
 	const onButtonClick = (buttonName) => {
-		if (buttonName === '=') {
-			calculate();
-		} else if (buttonName === 'C') {
-			setResult('');
-		} else if (buttonName == 'CE') {
-			setResult(result.slice(0, -1));
-		} else if (result.length <= 1 && result.substring(0, 1) === '0' && buttonName !== '.') {
-			setResult(buttonName);
-		} else {
-			setResult(result + buttonName);
+		try {
+			if (buttonName === '=') {
+				console.log(result);
+				calculate(result);
+			} else if (buttonName === 'C') {
+				setResult('');
+			} else if (buttonName === 'CE') {
+				setResult(result.slice(0, -1));
+				console.log(result.slice(0, -1));
+			} else if (result.length <= 1 && result.substring(0, 1) === '0' && buttonName !== '.') {
+				setResult(buttonName);
+			} else {
+				setResult(result + buttonName);
+			}
+		} catch (err) {
+			setResult('Error');
 		}
 	};
 	return (
